@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fawad Khan | Senior Microsoft Dynamics 365 CRM Developer</title>
-   
+    
     <!-- Fonts & Icons -->
     <link rel="icon" type="image/png" href="Images/favicon.ico.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-   
+    
     <style>
         :root {
+            /* Dark Theme (Default) */
             --primary: #2563eb;
             --primary-dark: #1d4ed8;
             --primary-light: #3b82f6;
@@ -30,18 +31,38 @@
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             --shadow-light: 0 5px 15px rgba(37, 99, 235, 0.2);
         }
-       
+        
+        /* Light Theme Variables */
+        [data-theme="light"] {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #3b82f6;
+            --secondary: #f8fafc;
+            --secondary-light: #ffffff;
+            --accent: #06b6d4;
+            --text: #0f172a;
+            --text-light: #1e293b;
+            --text-gray: #64748b;
+            --border: #e2e8f0;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --success: #10b981;
+            --gradient: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+            --gradient-2: linear-gradient(135deg, #f1f5f9 0%, #ffffff 100%);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --shadow-light: 0 5px 15px rgba(37, 99, 235, 0.15);
+        }
+        
         /* Reset & Base */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-       
+        
         html {
             scroll-behavior: smooth;
         }
-       
+        
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--secondary);
@@ -49,19 +70,63 @@
             line-height: 1.6;
             overflow-x: hidden;
             background: var(--gradient-2);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
-       
+        
         .container {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-       
+        
         section {
             padding: 100px 0;
         }
-       
+        
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            width: 60px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            padding: 0 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-light);
+        }
+        
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+        }
+        
+        .toggle-slider {
+            width: 22px;
+            height: 22px;
+            background: var(--gradient);
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        [data-theme="light"] .toggle-slider {
+            transform: translateX(30px);
+        }
+        
+        .toggle-icon {
+            font-size: 12px;
+            color: white;
+        }
+        
         /* Navigation */
         nav {
             position: fixed;
@@ -75,13 +140,17 @@
             padding: 20px 0;
             transition: var(--transition);
         }
-       
+        
+        [data-theme="light"] nav {
+            background: rgba(248, 250, 252, 0.95);
+        }
+        
         .nav-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-       
+        
         .logo {
             font-size: 24px;
             font-weight: 700;
@@ -91,13 +160,13 @@
             -webkit-text-fill-color: transparent;
             text-decoration: none;
         }
-       
+        
         .nav-links {
             display: flex;
             gap: 40px;
             list-style: none;
         }
-       
+        
         .nav-links a {
             color: var(--text-light);
             text-decoration: none;
@@ -106,11 +175,11 @@
             transition: var(--transition);
             position: relative;
         }
-       
+        
         .nav-links a:hover {
             color: var(--primary);
         }
-       
+        
         .nav-links a::after {
             content: '';
             position: absolute;
@@ -121,11 +190,11 @@
             background: var(--gradient);
             transition: var(--transition);
         }
-       
+        
         .nav-links a:hover::after {
             width: 100%;
         }
-       
+        
         .cv-download-btn {
             background: var(--gradient);
             color: white;
@@ -139,12 +208,12 @@
             align-items: center;
             gap: 8px;
         }
-       
+        
         .cv-download-btn:hover {
             transform: translateY(-2px);
             box-shadow: var(--shadow-light);
         }
-       
+        
         /* Hero Section */
         .hero {
             padding-top: 160px;
@@ -152,7 +221,7 @@
             position: relative;
             overflow: hidden;
         }
-       
+        
         .hero::before {
             content: '';
             position: absolute;
@@ -163,14 +232,14 @@
             background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, transparent 70%);
             z-index: -1;
         }
-       
+        
         .hero-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 60px;
             align-items: center;
         }
-       
+        
         .hero-tag {
             display: inline-flex;
             align-items: center;
@@ -184,31 +253,31 @@
             margin-bottom: 30px;
             border: 1px solid rgba(37, 99, 235, 0.2);
         }
-       
+        
         .hero-content h1 {
             font-size: 48px;
             font-weight: 800;
             line-height: 1.1;
             margin-bottom: 20px;
-            background: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 100%);
+            background: linear-gradient(135deg, var(--text) 0%, var(--text-gray) 100%);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-       
+        
         .hero-content p {
             font-size: 18px;
             color: var(--text-light);
             margin-bottom: 40px;
             max-width: 500px;
         }
-       
+        
         .btn-group {
             display: flex;
             gap: 20px;
             margin-bottom: 60px;
         }
-       
+        
         .btn {
             padding: 14px 32px;
             border-radius: 6px;
@@ -219,37 +288,37 @@
             gap: 10px;
             transition: var(--transition);
         }
-       
+        
         .btn-primary {
             background: var(--gradient);
             color: white;
         }
-       
+        
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: var(--shadow-light);
         }
-       
+        
         .btn-outline {
             background: transparent;
             border: 2px solid var(--border);
             color: var(--text-light);
         }
-       
+        
         .btn-outline:hover {
             border-color: var(--primary);
             color: var(--primary);
         }
-       
+        
         .hero-stats {
             display: flex;
             gap: 40px;
         }
-       
+        
         .stat-item {
             text-align: center;
         }
-       
+        
         .stat-number {
             font-size: 32px;
             font-weight: 700;
@@ -259,48 +328,48 @@
             -webkit-text-fill-color: transparent;
             margin-bottom: 5px;
         }
-       
+        
         .stat-text {
             font-size: 14px;
             color: var(--text-gray);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-       
+        
         .hero-image {
             position: relative;
         }
-       
+        
         .profile-img {
             width: 100%;
             max-width: 400px;
             border-radius: 20px;
             box-shadow: var(--shadow);
         }
-       
+        
         /* Section Titles */
         .section-title {
             text-align: center;
             margin-bottom: 60px;
         }
-       
+        
         .section-title h2 {
             font-size: 36px;
             font-weight: 800;
             margin-bottom: 15px;
-            background: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 100%);
+            background: linear-gradient(135deg, var(--text) 0%, var(--text-gray) 100%);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-       
+        
         .section-title p {
             color: var(--text-gray);
             font-size: 18px;
             max-width: 600px;
             margin: 0 auto;
         }
-       
+        
         /* Cards */
         .card {
             background: var(--card-bg);
@@ -310,47 +379,47 @@
             border: 1px solid var(--border);
             transition: var(--transition);
         }
-       
+        
         .card:hover {
             transform: translateY(-5px);
             border-color: var(--primary);
             box-shadow: var(--shadow);
         }
-       
+        
         /* About Section */
         .about-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 40px;
         }
-       
+        
         .skill-bar {
             margin-bottom: 25px;
         }
-       
+        
         .skill-info {
             display: flex;
             justify-content: space-between;
             margin-bottom: 10px;
         }
-       
+        
         .skill-name {
             font-weight: 600;
             color: var(--text-light);
         }
-       
+        
         .skill-percent {
             color: var(--primary);
             font-weight: 600;
         }
-       
+        
         .bar {
             height: 8px;
             background: var(--secondary-light);
             border-radius: 4px;
             overflow: hidden;
         }
-       
+        
         .progress {
             height: 100%;
             background: var(--gradient);
@@ -358,14 +427,14 @@
             width: 0;
             transition: width 1.5s ease;
         }
-       
+        
         /* Skills Grid */
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
         }
-       
+        
         .skill-category h3 {
             color: var(--primary);
             margin-bottom: 20px;
@@ -374,13 +443,13 @@
             align-items: center;
             gap: 10px;
         }
-       
+        
         .skill-items {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
         }
-       
+        
         .skill-tag {
             background: rgba(37, 99, 235, 0.1);
             color: var(--primary);
@@ -390,14 +459,14 @@
             font-weight: 500;
             border: 1px solid rgba(37, 99, 235, 0.2);
         }
-       
+        
         /* Experience */
         .timeline {
             position: relative;
             max-width: 800px;
             margin: 0 auto;
         }
-       
+        
         .timeline::before {
             content: '';
             position: absolute;
@@ -407,13 +476,13 @@
             width: 2px;
             background: var(--gradient);
         }
-       
+        
         .timeline-item {
             position: relative;
             padding-left: 60px;
             margin-bottom: 40px;
         }
-       
+        
         .timeline-dot {
             position: absolute;
             left: 14px;
@@ -424,7 +493,7 @@
             border-radius: 50%;
             z-index: 2;
         }
-       
+        
         .exp-header {
             display: flex;
             justify-content: space-between;
@@ -433,18 +502,18 @@
             flex-wrap: wrap;
             gap: 15px;
         }
-       
+        
         .exp-title {
             font-size: 20px;
             color: var(--text);
             margin-bottom: 5px;
         }
-       
+        
         .exp-company {
             color: var(--primary);
             font-weight: 600;
         }
-       
+        
         .exp-duration {
             background: rgba(37, 99, 235, 0.1);
             color: var(--primary);
@@ -453,14 +522,14 @@
             font-size: 14px;
             font-weight: 600;
         }
-       
+        
         .tech-stack {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             margin-top: 20px;
         }
-       
+        
         .tech-tag {
             background: rgba(37, 99, 235, 0.1);
             color: var(--primary);
@@ -469,72 +538,72 @@
             font-size: 13px;
             font-weight: 500;
         }
-       
+        
         /* Projects */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 30px;
         }
-       
+        
         .project-card h3 {
             font-size: 20px;
             margin-bottom: 10px;
             color: var(--text);
         }
-       
+        
         .project-tech {
             color: var(--primary);
             font-weight: 600;
             margin-bottom: 15px;
             font-size: 14px;
         }
-       
+        
         .project-desc {
             color: var(--text-light);
             margin-bottom: 20px;
         }
-       
+        
         .project-features {
             list-style: none;
         }
-       
+        
         .project-features li {
             margin-bottom: 8px;
             color: var(--text-gray);
             font-size: 14px;
         }
-       
+        
         .project-features li i {
             color: var(--primary);
             margin-right: 8px;
         }
-       
+        
         /* Certifications */
         .certifications-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 30px;
         }
-       
+        
         .cert-card h3 {
             font-size: 18px;
             margin-bottom: 5px;
         }
-       
+        
         .cert-subtitle {
             color: var(--text-gray);
             margin-bottom: 15px;
             font-size: 14px;
         }
-       
+        
         .cert-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-top: 20px;
         }
-       
+        
         .cert-status {
             background: var(--gradient);
             color: white;
@@ -543,89 +612,89 @@
             font-size: 12px;
             font-weight: 600;
         }
-
+        
         /* Lightbox Modal Styles */
-.lightbox-modal {
-    display: none;
-    position: fixed;
-    z-index: 2000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(15, 23, 42, 0.95); /* Matches your dark theme */
-    backdrop-filter: blur(8px);
-    overflow: auto;
-    transition: opacity 0.4s ease;
-    opacity: 0;
-    pointer-events: none;
-}
-
-.lightbox-modal.active {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.lightbox-content {
-    position: relative;
-    max-width: 90%;
-    max-height: 90vh;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-    transform: scale(0.8);
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.lightbox-modal.active .lightbox-content {
-    transform: scale(1);
-}
-
-.lightbox-img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.lightbox-close {
-    position: absolute;
-    top: 20px;
-    right: 25px;
-    color: white;
-    font-size: 40px;
-    font-weight: bold;
-    cursor: pointer;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.7);
-    transition: transform 0.3s;
-}
-
-.lightbox-close:hover {
-    transform: rotate(90deg) scale(1.15);
-    color: var(--primary);
-}
-       
+        .lightbox-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(8px);
+            overflow: auto;
+            transition: opacity 0.4s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .lightbox-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            transform: scale(0.8);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .lightbox-modal.active .lightbox-content {
+            transform: scale(1);
+        }
+        
+        .lightbox-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+            transition: transform 0.3s;
+        }
+        
+        .lightbox-close:hover {
+            transform: rotate(90deg) scale(1.15);
+            color: var(--primary);
+        }
+        
         /* Contact */
         .contact-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 40px;
         }
-       
+        
         .contact-info h3 {
             font-size: 24px;
             margin-bottom: 30px;
             color: var(--text);
         }
-       
+        
         .contact-item {
             display: flex;
             align-items: center;
             margin-bottom: 25px;
         }
-       
+        
         .contact-icon {
             width: 50px;
             height: 50px;
@@ -637,13 +706,13 @@
             margin-right: 15px;
             color: var(--primary);
         }
-       
+        
         .social-links {
             display: flex;
             gap: 15px;
             margin-top: 30px;
         }
-       
+        
         .social-link {
             width: 40px;
             height: 40px;
@@ -656,18 +725,18 @@
             text-decoration: none;
             transition: var(--transition);
         }
-       
+        
         .social-link:hover {
             background: var(--primary);
             color: white;
             transform: translateY(-3px);
         }
-       
+        
         /* Form */
         .form-group {
             margin-bottom: 25px;
         }
-       
+        
         .form-control {
             width: 100%;
             padding: 14px;
@@ -679,31 +748,35 @@
             font-size: 15px;
             transition: var(--transition);
         }
-       
+        
         .form-control:focus {
             outline: none;
             border-color: var(--primary);
         }
-       
+        
         textarea.form-control {
             min-height: 150px;
             resize: vertical;
         }
-       
+        
         /* Footer */
         footer {
             background: rgba(15, 23, 42, 0.95);
             padding: 60px 0 30px;
             border-top: 1px solid var(--border);
         }
-       
+        
+        [data-theme="light"] footer {
+            background: rgba(248, 250, 252, 0.95);
+        }
+        
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 40px;
             margin-bottom: 40px;
         }
-       
+        
         .footer-logo {
             font-size: 24px;
             font-weight: 700;
@@ -713,25 +786,25 @@
             -webkit-text-fill-color: transparent;
             margin-bottom: 20px;
         }
-       
+        
         .footer-links ul {
             list-style: none;
         }
-       
+        
         .footer-links li {
             margin-bottom: 10px;
         }
-       
+        
         .footer-links a {
             color: var(--text-gray);
             text-decoration: none;
             transition: var(--transition);
         }
-       
+        
         .footer-links a:hover {
             color: var(--primary);
         }
-       
+        
         .copyright {
             text-align: center;
             padding-top: 30px;
@@ -739,7 +812,7 @@
             color: var(--text-gray);
             font-size: 14px;
         }
-       
+        
         /* Responsive */
         @media (max-width: 992px) {
             .hero-container,
@@ -747,67 +820,79 @@
             .contact-container {
                 grid-template-columns: 1fr;
             }
-           
+            
             .hero-content h1 {
                 font-size: 36px;
             }
-           
+            
             .hero-image {
                 order: -1;
                 text-align: center;
             }
         }
-       
+        
         @media (max-width: 768px) {
             section {
                 padding: 70px 0;
             }
-           
+            
             .hero {
                 padding-top: 140px;
             }
-           
+            
             .nav-links {
                 display: none;
             }
-           
+            
             .hero-content h1 {
                 font-size: 32px;
             }
-           
+            
             .btn-group {
                 flex-direction: column;
             }
-           
+            
             .hero-stats {
                 flex-direction: column;
                 gap: 20px;
             }
-           
+            
             .section-title h2 {
                 font-size: 28px;
             }
         }
-       
+        
         @media (max-width: 576px) {
             .hero-content h1 {
                 font-size: 28px;
             }
-           
+            
             .projects-grid,
             .certifications-grid {
                 grid-template-columns: 1fr;
             }
-           
+            
             .exp-header {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 10px;
             }
+            
+            .theme-toggle {
+                top: 15px;
+                right: 15px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Theme Toggle Button -->
+    <div class="theme-toggle" id="themeToggle">
+        <div class="toggle-slider">
+            <i class="fas fa-moon toggle-icon"></i>
+        </div>
+    </div>
+    
     <!-- Navigation -->
     <nav>
         <div class="container nav-container">
@@ -821,24 +906,24 @@
                 <li><a href="#education">Education</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-            <a href="CV/Fawad MS CRM CV_2026.pdf" download="Fawad-Khan-CV.pdf" class="cv-download-btn">
+            <a href="CV/Fawad Khan Sr. MS CRM Developer CV.pdf" download="Fawad-Khan-Sr-MS-CRM-Developer-CV.pdf" class="cv-download-btn">
                 <i class="fas fa-download"></i> Download CV
             </a>
         </div>
     </nav>
+    
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
             <div class="hero-container">
                 <div class="hero-content">
-                 
                     <span class="hero-tag">
                         <i class="fas fa-rocket"></i>
-                       Senior Microsoft Dynamics 365 CRM Developer
+                        Senior Microsoft Dynamics 365 CRM Developer
                     </span>
                     <h1>Fawad Khan</h1>
                     <p>Senior Microsoft Dynamics 365 CRM Developer with 2.5+ years of experience delivering enterprise solutions using Dynamics CRM, .NET, Power Platform, and Azure services. Skilled in CRM customization, plugin development, business process automation, integrations, and data migration. Strong expertise in Power Apps, Power Automate, and Copilot Studio for building AI-driven automation and productivity tools.</p>
-                   
+                    
                     <div class="btn-group">
                         <a href="#contact" class="btn btn-primary">
                             Get In Touch <i class="fas fa-arrow-right"></i>
@@ -847,7 +932,7 @@
                             View Projects <i class="fas fa-briefcase"></i>
                         </a>
                     </div>
-                   
+                    
                     <div class="hero-stats">
                         <div class="stat-item">
                             <div class="stat-number">2.5+</div>
@@ -858,19 +943,19 @@
                             <div class="stat-text">Projects</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">3+</div>
+                            <div class="stat-number">5+</div>
                             <div class="stat-text">Certifications</div>
                         </div>
                     </div>
                 </div>
                 <!-- Image Portion -->
                 <div class="hero-image">
-                 
                     <img src="Images/Fawad Cv Pic.jpg" alt="Fawad Khan" class="profile-img">
                 </div>
             </div>
         </div>
     </section>
+    
     <!-- About Section -->
     <section id="about">
         <div class="container">
@@ -878,23 +963,23 @@
                 <h2>About Me</h2>
                 <p>Senior Microsoft Dynamics 365 CRM Developer with expertise in delivering enterprise solutions</p>
             </div>
-           
+            
             <div class="about-content">
-              <div class="card">
-    <p>Senior Microsoft Dynamics 365 CRM Developer with 2.5+ years of experience delivering enterprise solutions using Dynamics 365, .NET, Power Platform, and Azure. Expert in CRM customization, C# plugin/workflow development, business process automation, complex integrations, and large-scale data migration (SSIS).</p>
-    
-    <p>Specialized in building AI-powered tools with Power Apps (Canvas & Model-Driven), Power Automate, and Copilot Studio integrated with Azure OpenAI — driving automation and productivity gains of 35–60% across clients. Proven success in end-to-end CRM implementations, third-party integrations (RingCentral, Odoo ERP, Marketo, LGI, DocuSign), and optimizing Sales, Operations, and Customer Service processes.</p>
-    
-    <p>Passionate about creating scalable, efficient solutions with custom entities, BPFs, Power BI dashboards, and real-time data sync to deliver measurable business value.</p>
-    
-    <p>Consistently achieved significant efficiency improvements — reducing manual effort by up to 60% and accelerating onboarding/processing times by 40–50% for enterprise clients.</p>
-    <p>Actively certified in the latest Microsoft Applied Skills across Power Apps (Canvas & Model-Driven) and Copilot Studio — committed to delivering innovative, future-ready CRM solutions.</p>
-</div>
-               
+                <div class="card">
+                    <p>Senior Microsoft Dynamics 365 CRM Developer with 2.5+ years of experience delivering enterprise solutions using Dynamics 365, .NET, Power Platform, and Azure. Expert in CRM customization, C# plugin/workflow development, business process automation, complex integrations, and large-scale data migration (SSIS).</p>
+                    
+                    <p>Specialized in building AI-powered tools with Power Apps (Canvas & Model-Driven), Power Automate, and Copilot Studio integrated with Azure OpenAI — driving automation and productivity gains of 35–60% across clients. Proven success in end-to-end CRM implementations, third-party integrations (RingCentral, Odoo ERP, Marketo, LGI, DocuSign), and optimizing Sales, Operations, and Customer Service processes.</p>
+                    
+                    <p>Passionate about creating scalable, efficient solutions with custom entities, BPFs, Power BI dashboards, and real-time data sync to deliver measurable business value.</p>
+                    
+                    <p>Consistently achieved significant efficiency improvements — reducing manual effort by up to 60% and accelerating onboarding/processing times by 40–50% for enterprise clients.</p>
+                    <p>Actively certified in the latest Microsoft Applied Skills across Power Apps (Canvas & Model-Driven) and Copilot Studio — committed to delivering innovative, future-ready CRM solutions.</p>
+                </div>
+                
                 <div>
                     <div class="card mb-4">
                         <h3 style="color: var(--primary); margin-bottom: 25px;">Core Skills</h3>
-                       
+                        
                         <div class="skill-bar">
                             <div class="skill-info">
                                 <span class="skill-name">Dynamics 365 CRM</span>
@@ -904,7 +989,7 @@
                                 <div class="progress" data-width="95"></div>
                             </div>
                         </div>
-                  
+                        
                         <div class="skill-bar">
                             <div class="skill-info">
                                 <span class="skill-name">Power Platform</span>
@@ -914,7 +999,7 @@
                                 <div class="progress" data-width="90"></div>
                             </div>
                         </div>
-                       
+                        
                         <div class="skill-bar">
                             <div class="skill-info">
                                 <span class="skill-name">C# & Plugin Development</span>
@@ -924,7 +1009,7 @@
                                 <div class="progress" data-width="85"></div>
                             </div>
                         </div>
-                       
+                        
                         <div class="skill-bar">
                             <div class="skill-info">
                                 <span class="skill-name">Integration & APIs</span>
@@ -935,14 +1020,15 @@
                             </div>
                         </div>
                     </div>
+                    
                     <!-- Lightbox Modal (shared for all certification images) -->
-<div id="certLightbox" class="lightbox-modal">
-    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
-    <div class="lightbox-content">
-        <img class="lightbox-img" id="lightboxImage" src="" alt="Certification">
-    </div>
-</div>
-                   
+                    <div id="certLightbox" class="lightbox-modal">
+                        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+                        <div class="lightbox-content">
+                            <img class="lightbox-img" id="lightboxImage" src="" alt="Certification">
+                        </div>
+                    </div>
+                    
                     <div class="card">
                         <h3 style="color: var(--primary); margin-bottom: 25px;">Contact Info</h3>
                         <div style="margin-bottom: 15px;">
@@ -959,73 +1045,75 @@
             </div>
         </div>
     </section>
-  <!-- Skills Section -->
-<section id="skills">
-    <div class="container">
-        <div class="section-title">
-            <h2>Technical Skills</h2>
-            <p>Expertise in Microsoft Dynamics 365, Power Platform, and related technologies</p>
+    
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <div class="section-title">
+                <h2>Technical Skills</h2>
+                <p>Expertise in Microsoft Dynamics 365, Power Platform, and related technologies</p>
+            </div>
+            
+            <div class="skills-grid">
+                <div class="skill-category card">
+                    <h3><i class="fas fa-cogs"></i> CRM & Power Platform</h3>
+                    <div class="skill-items">
+                        <span class="skill-tag">Dynamics 365 Customization</span>
+                        <span class="skill-tag">Plugin/Workflow Development</span>
+                        <span class="skill-tag">Custom Entities & Business Rules</span>
+                        <span class="skill-tag">Business Process Flows (BPF)</span>
+                        <span class="skill-tag">Power Apps (Canvas)</span>
+                        <span class="skill-tag">Power Apps (Model-Driven)</span>
+                        <span class="skill-tag">Power Automate</span>
+                        <span class="skill-tag">Copilot Studio</span>
+                        <span class="skill-tag">Dataverse</span>
+                        <span class="skill-tag">SSIS / SSRS Reporting</span>
+                        <span class="skill-tag">Advanced Security Roles</span>
+                        <span class="skill-tag">Custom APIs & Web Resources</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category card">
+                    <h3><i class="fas fa-code"></i> Development</h3>
+                    <div class="skill-items">
+                        <span class="skill-tag">C#</span>
+                        <span class="skill-tag">.NET Framework / Core</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">jQuery</span>
+                        <span class="skill-tag">HTML5 / CSS3</span>
+                        <span class="skill-tag">Bootstrap</span>
+                        <span class="skill-tag">SQL Server</span>
+                        <span class="skill-tag">MySQL</span>
+                        <span class="skill-tag">Visual Studio</span>
+                        <span class="skill-tag">XRM Toolbox</span>
+                        <span class="skill-tag">Azure Functions</span>
+                        <span class="skill-tag">Prompt Engineering (Azure OpenAI)</span>
+                        <span class="skill-tag">Client-Side Scripting (Web Resources)</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category card">
+                    <h3><i class="fas fa-plug"></i> Integration & Tools</h3>
+                    <div class="skill-items">
+                        <span class="skill-tag">REST / SOAP APIs</span>
+                        <span class="skill-tag">Azure Functions</span>
+                        <span class="skill-tag">SharePoint Integration</span>
+                        <span class="skill-tag">External System Sync</span>
+                        <span class="skill-tag">Azure OpenAI</span>
+                        <span class="skill-tag">Power BI</span>
+                        <span class="skill-tag">RingCentral SDK</span>
+                        <span class="skill-tag">Odoo ERP Integration</span>
+                        <span class="skill-tag">Marketo Lead Management</span>
+                        <span class="skill-tag">LGI Inspection System</span>
+                        <span class="skill-tag">DocuSign Integration</span>
+                        <span class="skill-tag">Webhook Implementation</span>
+                        <span class="skill-tag">Real-time Data Synchronization</span>
+                    </div>
+                </div>
+            </div>
         </div>
-       
-        <div class="skills-grid">
-            <div class="skill-category card">
-                <h3><i class="fas fa-cogs"></i> CRM & Power Platform</h3>
-                <div class="skill-items">
-                    <span class="skill-tag">Dynamics 365 Customization</span>
-                    <span class="skill-tag">Plugin/Workflow Development</span>
-                    <span class="skill-tag">Custom Entities & Business Rules</span>
-                    <span class="skill-tag">Business Process Flows (BPF)</span>
-                    <span class="skill-tag">Power Apps (Canvas)</span>
-                    <span class="skill-tag">Power Apps (Model-Driven)</span>
-                    <span class="skill-tag">Power Automate</span>
-                    <span class="skill-tag">Copilot Studio</span>
-                    <span class="skill-tag">Dataverse</span>
-                    <span class="skill-tag">SSIS / SSRS Reporting</span>
-                    <span class="skill-tag">Advanced Security Roles</span>
-                    <span class="skill-tag">Custom APIs & Web Resources</span>
-                </div>
-            </div>
-           
-            <div class="skill-category card">
-                <h3><i class="fas fa-code"></i> Development</h3>
-                <div class="skill-items">
-                    <span class="skill-tag">C#</span>
-                    <span class="skill-tag">.NET Framework / Core</span>
-                    <span class="skill-tag">JavaScript</span>
-                    <span class="skill-tag">jQuery</span>
-                    <span class="skill-tag">HTML5 / CSS3</span>
-                    <span class="skill-tag">Bootstrap</span>
-                    <span class="skill-tag">SQL Server</span>
-                    <span class="skill-tag">MySQL</span>
-                    <span class="skill-tag">Visual Studio</span>
-                    <span class="skill-tag">XRM Toolbox</span>
-                    <span class="skill-tag">Azure Functions</span>
-                    <span class="skill-tag">Prompt Engineering (Azure OpenAI)</span>
-                    <span class="skill-tag">Client-Side Scripting (Web Resources)</span>
-                </div>
-            </div>
-           
-            <div class="skill-category card">
-                <h3><i class="fas fa-plug"></i> Integration & Tools</h3>
-                <div class="skill-items">
-                    <span class="skill-tag">REST / SOAP APIs</span>
-                    <span class="skill-tag">Azure Functions</span>
-                    <span class="skill-tag">SharePoint Integration</span>
-                    <span class="skill-tag">External System Sync</span>
-                    <span class="skill-tag">Azure OpenAI</span>
-                    <span class="skill-tag">Power BI</span>
-                    <span class="skill-tag">RingCentral SDK</span>
-                    <span class="skill-tag">Odoo ERP Integration</span>
-                    <span class="skill-tag">Marketo Lead Management</span>
-                    <span class="skill-tag">LGI Inspection System</span>
-                    <span class="skill-tag">DocuSign Integration</span>
-                    <span class="skill-tag">Webhook Implementation</span>
-                    <span class="skill-tag">Real-time Data Synchronization</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+    </section>
+    
     <!-- Experience Section -->
     <section id="experience">
         <div class="container">
@@ -1033,7 +1121,7 @@
                 <h2>Professional Experience</h2>
                 <p>My journey in Dynamics 365 CRM consulting and development</p>
             </div>
-           
+            
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
@@ -1058,7 +1146,7 @@
                         </div>
                     </div>
                 </div>
-               
+                
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="card timeline-content">
@@ -1085,6 +1173,7 @@
             </div>
         </div>
     </section>
+    
     <!-- Projects Section -->
     <section id="projects">
         <div class="container">
@@ -1092,7 +1181,7 @@
                 <h2>Major Projects</h2>
                 <p>Key Dynamics 365 CRM implementations and solutions delivered</p>
             </div>
-           
+            
             <div class="projects-grid">
                 <div class="project-card card">
                     <h3>RFQ Management System</h3>
@@ -1105,7 +1194,7 @@
                         <li><i class="fas fa-check"></i> Automated duplicate detection</li>
                     </ul>
                 </div>
-               
+                
                 <div class="project-card card">
                     <h3>Copilot CRM Integration</h3>
                     <p class="project-tech">Azure OpenAI • Copilot Studio • Dynamics 365</p>
@@ -1117,7 +1206,7 @@
                         <li><i class="fas fa-check"></i> Customer message analysis for support agents</li>
                     </ul>
                 </div>
-               
+                
                 <div class="project-card card">
                     <h3>NetCom Learning Sales Solution</h3>
                     <p class="project-tech">Dynamics 365 Sales • Custom APIs • Integration</p>
@@ -1129,7 +1218,7 @@
                         <li><i class="fas fa-check"></i> Advanced security roles and dashboards</li>
                     </ul>
                 </div>
-               
+                
                 <div class="project-card card">
                     <h3>Mimojo CRM Solution</h3>
                     <p class="project-tech">Dynamics 365 Sales Customization</p>
@@ -1141,7 +1230,7 @@
                         <li><i class="fas fa-check"></i> Automated reports and tracking</li>
                     </ul>
                 </div>
-
+                
                 <div class="project-card card">
                     <h3>Oil & Gas Inspection Management System</h3>
                     <p class="project-tech">End-to-End Solution</p>
@@ -1153,7 +1242,7 @@
                         <li><i class="fas fa-check"></i> Dashboards for RFQ tracking and compliance</li>
                     </ul>
                 </div>
-
+                
                 <div class="project-card card">
                     <h3>IMPAQ Business Therry – RingCentral Integration</h3>
                     <p class="project-tech">Dynamics 365 Telephony Solution</p>
@@ -1165,7 +1254,7 @@
                         <li><i class="fas fa-check"></i> Click-to-call functionality</li>
                     </ul>
                 </div>
-
+                
                 <div class="project-card card">
                     <h3>Odoo-Dynamics CRM Integration</h3>
                     <p class="project-tech">Two-Way ERP-CRM Synchronization and SSIS Data Migration</p>
@@ -1180,15 +1269,15 @@
             </div>
         </div>
     </section>
-  
-       <!-- Certifications Section -->
+    
+    <!-- Certifications Section -->
     <section id="certifications">
         <div class="container">
             <div class="section-title">
                 <h2>Microsoft Applied Skills Certifications</h2>
                 <p>Earned credentials demonstrating expertise in Power Platform and Dynamics 365</p>
             </div>
-           
+            
             <div class="certifications-grid">
                 <div class="cert-card card">
                     <img src="Images/Convas App Applied Skill.png" alt="Create and manage canvas apps with Power Apps Certification" style="width: 100%; border-radius: 8px; margin-bottom: 15px;" class="cert-image" onclick="openLightbox(this.src)">
@@ -1200,7 +1289,7 @@
                         <a href="https://learn.microsoft.com/en-gb/users/FawadKhan-3316/credentials/56A79B5E2C35F250?ref=https%3a%2f%2fwww.linkedin.com%2f" target="_blank" class="cert-status">Verified</a>
                     </div>
                 </div>
-               
+                
                 <div class="cert-card card">
                     <img src="Images/Create Agent in Applied Skills.png" alt="Create agents in Microsoft Copilot Studio Certification" style="width: 100%; border-radius: 8px; margin-bottom: 15px;" class="cert-image" onclick="openLightbox(this.src)">
                     <h3>Create agents in Microsoft Copilot Studio</h3>
@@ -1211,7 +1300,7 @@
                         <a href="https://learn.microsoft.com/en-gb/users/FawadKhan-3316/credentials/C89A549C29CECA76?ref=https%3A%2F%2Fwww.linkedin.com%2F" target="_blank" class="cert-status">Verified</a>
                     </div>
                 </div>
-               
+                
                 <div class="cert-card card">
                     <img src="Images/Model Driven App Applied Skills.png" alt="Create and manage model-driven apps with Power Apps and Dataverse Certification" style="width: 100%; border-radius: 8px; margin-bottom: 15px;" class="cert-image" onclick="openLightbox(this.src)">
                     <h3>Create and manage model-driven apps with Power Apps and Dataverse</h3>
@@ -1222,10 +1311,34 @@
                         <a href="https://learn.microsoft.com/api/credentials/share/en-gb/FawadKhan-3316/2A5643B8AE1CE8F1?sharingId=7F517648B3794F64" target="_blank" class="cert-status">Verified</a>
                     </div>
                 </div>
+                
+                <!-- NEW: Power Automate Certification -->
+                <div class="cert-card card">
+                    <img src="Images/Power automate Applied Skills.png" alt="Create and manage flows with Power Automate Certification" style="width: 100%; border-radius: 8px; margin-bottom: 15px;" class="cert-image" onclick="openLightbox(this.src)">
+                    <h3>Create and manage flows with Power Automate</h3>
+                    <p class="cert-subtitle">Microsoft Applied Skills</p>
+                    <p>Credential ID: AD217FEF719908E8</p>
+                    <div class="cert-meta">
+                        <span>Earned on: 16 January 2026</span>
+                        <a href="https://learn.microsoft.com/en-gb/users/fawadkhan-3316/credentials/ad217fef719908e8" target="_blank" class="cert-status">Verified</a>
+                    </div>
+                </div>
+                
+                <!-- NEW: C# Certification -->
+                <div class="cert-card card">
+                    <img src="Images/C# Applied Skills.png" alt="Build .NET applications with C# Certification" style="width: 100%; border-radius: 8px; margin-bottom: 15px;" class="cert-image" onclick="openLightbox(this.src)">
+                    <h3>Build .NET applications with C#</h3>
+                    <p class="cert-subtitle">Microsoft Applied Skills</p>
+                    <p>Credential ID: 5122102D5382DAC7</p>
+                    <div class="cert-meta">
+                        <span>Earned on: 14 January 2026</span>
+                        <a href="https://learn.microsoft.com/en-gb/users/fawadkhan-3316/credentials/5122102d5382dac7" target="_blank" class="cert-status">Verified</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
-
+    
     <!-- Education Section -->
     <section id="education">
         <div class="container">
@@ -1233,7 +1346,7 @@
                 <h2>Education</h2>
                 <p>Academic background and qualifications</p>
             </div>
-           
+            
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
@@ -1248,7 +1361,7 @@
                         <p>Completed Bachelor's degree in Economics with focus on economic principles, business analytics, and data interpretation, providing a strong foundation for understanding business processes and CRM implementation strategies.</p>
                     </div>
                 </div>
-               
+                
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="card timeline-content">
@@ -1271,6 +1384,7 @@
             </div>
         </div>
     </section>
+    
     <!-- Contact Section -->
     <section id="contact">
         <div class="container">
@@ -1278,12 +1392,12 @@
                 <h2>Contact Me</h2>
                 <p>Let's discuss your Dynamics 365 CRM needs</p>
             </div>
-           
+            
             <div class="contact-container">
                 <div class="contact-info">
                     <div class="card">
                         <h3 style="color: var(--primary); margin-bottom: 30px;">Get In Touch</h3>
-                       
+                        
                         <div class="contact-item">
                             <div class="contact-icon">
                                 <i class="fas fa-envelope"></i>
@@ -1293,7 +1407,7 @@
                                 <p>fawad.fullstack@gmail.com</p>
                             </div>
                         </div>
-                       
+                        
                         <div class="contact-item">
                             <div class="contact-icon">
                                 <i class="fas fa-phone"></i>
@@ -1303,7 +1417,7 @@
                                 <p>+92 337 6346297</p>
                             </div>
                         </div>
-                       
+                        
                         <div class="contact-item">
                             <div class="contact-icon">
                                 <i class="fas fa-map-marker-alt"></i>
@@ -1313,7 +1427,7 @@
                                 <p>Islamabad, Pakistan</p>
                             </div>
                         </div>
-                       
+                        
                         <div class="social-links">
                             <a href="mailto:fawad.fullstack@gmail.com" class="social-link" aria-label="Email">
                                 <i class="fas fa-envelope"></i>
@@ -1327,7 +1441,7 @@
                         </div>
                     </div>
                 </div>
-               
+                
                 <div class="contact-form-container">
                     <div class="card">
                         <h3 style="color: var(--primary); margin-bottom: 30px;">Send a Message</h3>
@@ -1335,19 +1449,19 @@
                             <div class="form-group">
                                 <input type="text" id="name" class="form-control" placeholder="Your Name" required>
                             </div>
-                           
+                            
                             <div class="form-group">
                                 <input type="email" id="email" class="form-control" placeholder="Your Email" required>
                             </div>
-                           
+                            
                             <div class="form-group">
                                 <input type="text" id="subject" class="form-control" placeholder="Subject" required>
                             </div>
-                           
+                            
                             <div class="form-group">
                                 <textarea id="message" class="form-control" placeholder="Your Message" required></textarea>
                             </div>
-                           
+                            
                             <button type="submit" class="btn btn-primary">Send Message <i class="fas fa-paper-plane"></i></button>
                             <div id="formStatus" class="form-status" style="display: none; margin-top: 15px; padding: 10px; border-radius: 6px;"></div>
                         </form>
@@ -1356,6 +1470,7 @@
             </div>
         </div>
     </section>
+    
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -1364,9 +1479,9 @@
                     <div class="footer-logo">Fawad Khan</div>
                     <p style="color: var(--text-gray); margin-bottom: 20px;">Senior Microsoft Dynamics 365 CRM Developer specializing in enterprise solutions, Power Platform development, and business process automation.</p>
                 </div>
-               
+                
                 <div class="footer-links">
-                    <h4 style="color: white; margin-bottom: 20px; font-size: 1.2rem;">Quick Links</h4>
+                    <h4 style="color: var(--text); margin-bottom: 20px; font-size: 1.2rem;">Quick Links</h4>
                     <ul>
                         <li><a href="#about">About</a></li>
                         <li><a href="#skills">Skills</a></li>
@@ -1377,31 +1492,66 @@
                         <li><a href="#contact">Contact</a></li>
                     </ul>
                 </div>
-               
+                
                 <div class="footer-newsletter">
-                    <h4 style="color: white; margin-bottom: 20px; font-size: 1.2rem;">Let's Connect</h4>
+                    <h4 style="color: var(--text); margin-bottom: 20px; font-size: 1.2rem;">Let's Connect</h4>
                     <p style="color: var(--text-gray); margin-bottom: 20px;">Interested in Dynamics 365 CRM solutions? Feel free to reach out for project discussions or opportunities.</p>
                     <a href="mailto:fawad.fullstack@gmail.com" class="btn btn-primary">Email Me</a>
                 </div>
             </div>
-           
+            
             <div class="copyright">
                 <p>&copy; 2026 Fawad Khan. All rights reserved.</p>
             </div>
         </div>
     </footer>
+    
     <script>
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        
+        // Set initial theme
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        
+        // Update toggle icon based on theme
+        updateToggleIcon(currentTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            updateToggleIcon(newTheme);
+        });
+        
+        function updateToggleIcon(theme) {
+            const toggleIcon = themeToggle.querySelector('.toggle-icon');
+            if (theme === 'dark') {
+                toggleIcon.className = 'fas fa-moon toggle-icon';
+            } else {
+                toggleIcon.className = 'fas fa-sun toggle-icon';
+            }
+        }
+        
         // Navbar scroll effect
         window.addEventListener('scroll', () => {
             const navbar = document.querySelector('nav');
             if (window.scrollY > 50) {
                 navbar.style.padding = '15px 0';
-                navbar.style.background = 'rgba(15, 23, 42, 0.98)';
+                navbar.style.background = document.documentElement.getAttribute('data-theme') === 'dark' 
+                    ? 'rgba(15, 23, 42, 0.98)' 
+                    : 'rgba(248, 250, 252, 0.98)';
             } else {
                 navbar.style.padding = '20px 0';
-                navbar.style.background = 'rgba(15, 23, 42, 0.95)';
+                navbar.style.background = document.documentElement.getAttribute('data-theme') === 'dark'
+                    ? 'rgba(15, 23, 42, 0.95)'
+                    : 'rgba(248, 250, 252, 0.95)';
             }
         });
+        
         // Animate skill bars on scroll
         const animateSkillBars = () => {
             const progressBars = document.querySelectorAll('.progress');
@@ -1410,6 +1560,7 @@
                 bar.style.width = width;
             });
         };
+        
         // Intersection Observer for animations
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -1426,6 +1577,7 @@
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
         });
+        
         // Observe elements for animation
         document.querySelectorAll('.card, .section-title').forEach(el => {
             el.style.opacity = '0';
@@ -1433,6 +1585,7 @@
             el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             observer.observe(el);
         });
+        
         // Contact Form Submission
         document.getElementById('contactForm').addEventListener('submit', function (e) {
             e.preventDefault();
@@ -1440,6 +1593,7 @@
             const originalText = submitBtn.innerHTML;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
             submitBtn.disabled = true;
+            
             setTimeout(() => {
                 const formStatus = document.getElementById('formStatus');
                 formStatus.className = 'form-status success';
@@ -1448,20 +1602,24 @@
                 formStatus.style.background = 'rgba(16, 185, 129, 0.1)';
                 formStatus.style.color = '#10b981';
                 formStatus.style.border = '1px solid rgba(16, 185, 129, 0.3)';
+                
                 document.getElementById('contactForm').reset();
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
+                
                 setTimeout(() => {
                     formStatus.style.display = 'none';
                 }, 5000);
             }, 1500);
         });
+        
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const targetId = this.getAttribute('href');
                 if (targetId === '#') return;
+                
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
                     window.scrollTo({
@@ -1471,48 +1629,56 @@
                 }
             });
         });
-
+        
         // Lightbox functions
-function openLightbox(src) {
-    const modal = document.getElementById('certLightbox');
-    const img = document.getElementById('lightboxImage');
-    
-    img.src = src;
-    modal.classList.add('active');
-    
-    // Prevent body scroll while modal is open
-    document.body.style.overflow = 'hidden';
-}
-
-function closeLightbox() {
-    const modal = document.getElementById('certLightbox');
-    modal.classList.remove('active');
-    
-    // Restore scroll
-    document.body.style.overflow = '';
-    
-    // Optional: Clear src after close to save memory
-    setTimeout(() => {
-        document.getElementById('lightboxImage').src = '';
-    }, 400);
-}
-
-// Close when clicking outside image
-document.getElementById('certLightbox').addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeLightbox();
-    }
-});
-
-// Close with Escape key
-document.addEventListener('keydown', function(e) {
-    if (e.key === "Escape" && document.getElementById('certLightbox').classList.contains('active')) {
-        closeLightbox();
-    }
-});
+        function openLightbox(src) {
+            const modal = document.getElementById('certLightbox');
+            const img = document.getElementById('lightboxImage');
+            
+            img.src = src;
+            modal.classList.add('active');
+            
+            // Prevent body scroll while modal is open
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeLightbox() {
+            const modal = document.getElementById('certLightbox');
+            modal.classList.remove('active');
+            
+            // Restore scroll
+            document.body.style.overflow = '';
+            
+            // Optional: Clear src after close to save memory
+            setTimeout(() => {
+                document.getElementById('lightboxImage').src = '';
+            }, 400);
+        }
+        
+        // Close when clicking outside image
+        document.getElementById('certLightbox').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLightbox();
+            }
+        });
+        
+        // Close with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "Escape" && document.getElementById('certLightbox').classList.contains('active')) {
+                closeLightbox();
+            }
+        });
+        
         // Initialize animations on page load
         document.addEventListener('DOMContentLoaded', () => {
             animateSkillBars();
+            
+            // Set initial navbar background based on theme
+            const navbar = document.querySelector('nav');
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            navbar.style.background = currentTheme === 'dark'
+                ? 'rgba(15, 23, 42, 0.95)'
+                : 'rgba(248, 250, 252, 0.95)';
         });
     </script>
 </body>
